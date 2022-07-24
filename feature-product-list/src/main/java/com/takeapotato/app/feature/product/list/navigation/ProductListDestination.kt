@@ -2,6 +2,7 @@ package com.takeapotato.app.feature.product.list.navigation
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import androidx.navigation.navigation
 import com.takeapotato.app.feature.product.list.ProductListRoute
 import com.takeapotato.core.ui.navigation.GamzaNavigationDestination
 
@@ -11,8 +12,19 @@ object ProductListDestination: GamzaNavigationDestination {
 
 }
 
-fun NavGraphBuilder.productListGraph() {
-    composable(route = ProductListDestination.route) {
-        ProductListRoute()
+fun NavGraphBuilder.productListGraph(
+    navigateToProduct: (String) -> Unit,
+    nestedGraphs: NavGraphBuilder.() -> Unit
+) {
+    navigation(
+        route = ProductListDestination.route,
+        startDestination = ProductListDestination.destination
+    ) {
+        composable(route = ProductListDestination.destination) {
+            ProductListRoute(
+                navigateToProduct = navigateToProduct
+            )
+        }
+        nestedGraphs()
     }
 }

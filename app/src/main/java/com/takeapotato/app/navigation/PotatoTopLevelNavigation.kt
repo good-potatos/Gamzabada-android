@@ -1,9 +1,11 @@
 package com.takeapotato.app.navigation
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import com.takeapotato.app.feature.main.navigation.MainDestination
 import com.takeapotato.app.feature.product.list.navigation.ProductListDestination
 import com.takeapotato.app.feature.search.navigation.SearchDestination
 
@@ -23,18 +25,18 @@ class GamzaTopLevelNavigation(private val navController: NavHostController) {
 
 data class TopLevelDestination(
     val route: String,
-//    val selectedIcon: ImageVector,
-//    val unselectedIcon: ImageVector,
+//    val selectedIcon: Painter,
+//    val unselectedIcon: Painter,
 )
 
 val TOP_LEVEL_DESTINATIONS = listOf(
     TopLevelDestination(
-        route = ProductListDestination.route,
+        route = MainDestination.route,
 //        selectedIcon = Icons.Filled.Upcoming,
 //        unselectedIcon = Icons.Outlined.Upcoming,
     ),
     TopLevelDestination(
-        route = SearchDestination.route,
+        route = ProductListDestination.route,
 //        selectedIcon = Icons.Filled.Grid3x3,
 //        unselectedIcon = Icons.Outlined.Grid3x3,
     )

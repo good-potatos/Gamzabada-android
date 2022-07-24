@@ -1,0 +1,58 @@
+plugins {
+  id 'com.android.library'
+  id 'org.jetbrains.kotlin.android'
+}
+
+android {
+  namespace 'com.takeapotato.feature.main'
+  compileSdk rootProject.compileSdkVersion
+
+  defaultConfig {
+    minSdk rootProject.minSdkVersion
+    targetSdk rootProject.targetSdkVersion
+
+    testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    consumerProguardFiles "consumer-rules.pro"
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+    }
+  }
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_11
+    targetCompatibility JavaVersion.VERSION_11
+  }
+  kotlinOptions {
+    jvmTarget = '11'
+  }
+
+  buildFeatures {
+    compose true
+  }
+
+  composeOptions {
+    kotlinCompilerExtensionVersion composeVersion
+  }
+}
+
+dependencies {
+
+  implementation(project(":core-data"))
+  implementation(project(":core-ui"))
+
+  implementation "androidx.core:core-ktx:$coreKtxVersion"
+  implementation "androidx.appcompat:appcompat:$appcompatVersion"
+  implementation "com.google.android.material:material:$materialVersion"
+  implementation "androidx.compose.ui:ui:$composeVersion"
+  implementation "androidx.compose.material:material:$composeVersion"
+  implementation "androidx.compose.ui:ui-tooling-preview:$composeVersion"
+  implementation "androidx.navigation:navigation-compose:$navVersion"
+
+
+  testImplementation 'junit:junit:4.13.2'
+  androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+  androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+}
