@@ -1,6 +1,8 @@
 plugins {
   id 'com.android.library'
   id 'org.jetbrains.kotlin.android'
+  id 'kotlin-kapt'
+  id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -31,5 +33,16 @@ android {
 }
 
 dependencies {
+
+  implementation(project(":core-domain"))
+  implementation(project(":core-datasource"))
+
+  // hilt
+  implementation "com.google.dagger:hilt-android:$hiltVersion"
+  kapt "com.google.dagger:hilt-android-compiler:$hiltVersion"
+
+  //coroutines
+  implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutineVersion"
+
 
 }

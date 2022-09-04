@@ -10,15 +10,21 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.takeapotato.core.domain.product.Product
 import com.takeapotato.core.ui.component.GamzaTopBar
 import kotlin.random.Random
 
@@ -26,10 +32,13 @@ import kotlin.random.Random
 fun ProductListRoute(
     modifier: Modifier = Modifier,
     navigateToProduct: (String) -> Unit,
-//    viewModel: ForYouViewModel = hiltViewModel()
+    viewModel: ProductListViewModel = hiltViewModel()
 ) {
+    val uiState: ProductListScreenUiState by viewModel.uiState.collectAsState()
+
     ProductListScreen(
         modifier = modifier,
+        productState = uiState.productsState,
         navigateToProduct = navigateToProduct
     )
 }
@@ -37,6 +46,7 @@ fun ProductListRoute(
 @Composable
 fun ProductListScreen(
     modifier: Modifier,
+    productState: ProductsUiState,
     navigateToProduct: (String) -> Unit,
 ) {
     Scaffold(
@@ -44,23 +54,35 @@ fun ProductListScreen(
             GamzaTopBar(title = "Product List")
         },
     ) { innerPadding ->
-        val list = listOf<String>("", "", "", "", "")
-        LazyVerticalGrid(columns = GridCells.Fixed(2),
-            modifier = Modifier.padding(20.dp),
-            verticalArrangement = Arrangement.spacedBy(24.dp),
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
-            ) {
 
-            items(10) {
-                TestItem(navigateToProduct)
+        when (productState) {
+            ProductsUiState.Loading -> {
+            }
+            ProductsUiState.Error -> {
+
+            }
+            is ProductsUiState.Success -> {
+                val list = productState.products
+                LazyVerticalGrid(columns = GridCells.Fixed(2),
+                    modifier = Modifier.padding(20.dp),
+                    verticalArrangement = Arrangement.spacedBy(24.dp),
+                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                ) {
+
+                    items(list) {
+                        TestItem(navigateToProduct, it.title)
+                    }
+                }
             }
         }
+
+
     }
 
 }
 
 @Composable
-fun TestItem(navigateToProduct: (String) -> Unit,) {
+fun TestItem(navigateToProduct: (String) -> Unit, title: String) {
     Column(Modifier.fillMaxWidth()) {
         Box(Modifier
             .fillMaxWidth()
@@ -71,7 +93,7 @@ fun TestItem(navigateToProduct: (String) -> Unit,) {
             })
         Spacer(modifier = Modifier.height(9.5.dp))
         val random = Random.nextInt(30)
-        Text("나롱이의 라이언 나롱이의 라이언나롱이의 라이언나롱이의 라이언나롱이의라이언나롱이의라이언나롱이의라이언나롱이의라이언나롱이의라이언나롱이의 라이언".substring(0, random))
+        Text(title)
         Text("현재가격 1,000원")
         Text("19일 4시간 26분 남음")
     }
