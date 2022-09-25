@@ -1,25 +1,22 @@
 package com.takeapotato.app.feature.main
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight.Companion.SemiBold
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.takeapotato.core.ui.component.GamzaTopBar
-import kotlin.random.Random
+import com.takeapotato.core.ui.component.ProductItem
+import com.takeapotato.core.ui.component.TagBadge
+import com.takeapotato.core.ui.theme.Gray900
 
 @Composable
 fun MainRoute(
@@ -41,16 +38,15 @@ fun MainScreen(
         },
     ) { innerPadding ->
         LazyColumn(
-            modifier = modifier
-                .padding(innerPadding)
+            modifier = modifier.padding(innerPadding)
         ) {
             item {
                 TopBanner()
             }
-//
-//            item {
-//                MainProductList()
-//            }
+
+            item {
+                MainProductList()
+            }
 
 
         }
@@ -60,49 +56,66 @@ fun MainScreen(
 @Composable
 fun TopBanner() {
 
-    Box(Modifier.fillMaxWidth().height(220.dp).background(Color.Gray))
+    Box(
+        Modifier
+            .fillMaxWidth()
+            .height(220.dp)
+            .background(Color.Gray)
+    )
 }
 
 @Composable
 fun MainProductList() {
     Column {
-        ProductTitle()
-        ProductGrid()
+        ProductTitle("인기있는 상품들")
+        ProductRowList()
     }
 
 }
 
 @Composable
-private fun ProductTitle() {
-    Text("aaaaaa")
+private fun ProductTitle(title: String) {
+    Text(
+        text = title,
+        modifier = Modifier.padding(start = 16.dp, bottom = 16.dp),
+        style = TextStyle(
+            color = Gray900,
+            fontSize = 20.sp,
+            lineHeight = 27.sp,
+            fontWeight = SemiBold
+        )
+    )
 }
 
 @Composable
-private fun ProductGrid() {
-    LazyVerticalGrid(columns = GridCells.Fixed(2),
-        modifier = Modifier.padding(20.dp),
-        verticalArrangement = Arrangement.spacedBy(24.dp),
+private fun ProductRowList() {
+    var isLike by remember { mutableStateOf(false) }
+
+    LazyRow(
+        contentPadding = PaddingValues(20.dp),
         horizontalArrangement = Arrangement.spacedBy(16.dp),
     ) {
 
-        items(6) {
-            ProductItem()
-        }
-    }
-}
 
-@Composable
-fun ProductItem() {
-    Column(Modifier.fillMaxWidth()) {
-        Box(
-            Modifier
-                .fillMaxWidth()
-                .aspectRatio(1f)
-                .background(Color.Red))
-        Spacer(modifier = Modifier.height(9.5.dp))
-        val random = Random.nextInt(30)
-        Text("나롱이의 라이언 나롱이의 라이언나롱이의 라이언나롱이의 라이언나롱이의라이언나롱이의라이언나롱이의라이언나롱이의라이언나롱이의라이언나롱이의 라이언".substring(0, random))
-        Text("현재가격 1,000원")
-        Text("19일 4시간 26분 남음")
+        items(6) {
+            Box(Modifier.width(152.dp)) {
+                ProductItem(
+                    onClick = {},
+                    title = "나롱이의 춘식이나롱이의 춘식이나롱이의 춘식이나롱이의 춘식이",
+                    imageUrl = "https://picsum.photos/200?$it",
+                    price = 14000,
+                    remainTime = "14일 4시간 26분 남음",
+                    isLike = isLike,
+                    titleMaxLine = 2,
+                    onLikeClick = {like ->
+                        isLike = like
+                    },
+                    tagBadge = {
+                        TagBadge(text = "예약완료", color = Color.Black)
+                    }
+                )
+            }
+
+        }
     }
 }
