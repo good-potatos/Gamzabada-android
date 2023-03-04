@@ -8,7 +8,6 @@ import com.takeapotato.core.ui.navigation.GamzaNavigationDestination
 object MainDestination: GamzaNavigationDestination {
     override val route: String = "main_route"
     override val destination: String = "main_destination"
-
 }
 
 fun NavGraphBuilder.mainGraph() {

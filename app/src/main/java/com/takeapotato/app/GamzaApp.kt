@@ -1,5 +1,6 @@
 package com.takeapotato.app
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
@@ -18,7 +19,6 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.takeapotato.app.feature.main.navigation.MainDestination
 import com.takeapotato.app.feature.main.navigation.mainGraph
-import com.takeapotato.app.feature.product.list.navigation.ProductListDestination
 import com.takeapotato.app.feature.product.list.navigation.productListGraph
 import com.takeapotato.app.feature.product.navigation.ProductDestination
 import com.takeapotato.app.feature.product.navigation.productGraph
@@ -42,7 +42,8 @@ fun GamzaApp() {
                 backgroundColor = Color.White
             ) {
                 TOP_LEVEL_DESTINATIONS.forEach { destination ->
-                    val selected = currentDestination?.hierarchy?.any { it.route == destination.route } == true
+                    val selected =
+                        currentDestination?.hierarchy?.any { it.route == destination.route } == true
                     BottomNavigationItem(selected = selected,
                         onClick = { gamzaTopLevelNavigation.navigationTo(destination) },
                         icon = {
@@ -54,7 +55,10 @@ fun GamzaApp() {
                 }
             }
         }) { innerPadding ->
-            NiaNavHost(navController = navController)
+            Box(modifier = Modifier.padding(innerPadding)) {
+                NiaNavHost(navController = navController)
+            }
+
         }
     }
 }

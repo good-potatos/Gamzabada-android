@@ -6,4 +6,5 @@ import kotlinx.coroutines.flow.Flow
 interface ProductDataSource {
 
     fun getProduct(): Flow<ProductEntity>
+    fun getAllProductList(offset: Int): Flow<List<ProductEntity>>
 }

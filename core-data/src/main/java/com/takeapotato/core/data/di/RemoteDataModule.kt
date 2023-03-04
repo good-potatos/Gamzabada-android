@@ -13,8 +13,8 @@ interface RemoteDataModule {
 
     @Binds
     fun bindsProductRemote(
-        productRemote: com.takeapotato.core.datasource.product.ProductRemoteImpl
-    ): com.takeapotato.core.datasource.product.ProductRemote
+        productRemote: ProductRemoteImpl
+    ): ProductRemote
 
 
 }

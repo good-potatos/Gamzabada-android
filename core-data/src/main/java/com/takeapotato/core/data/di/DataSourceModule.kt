@@ -13,8 +13,8 @@ interface DataSourceModule {
 
     @Binds
     fun bindsProductDataSource(
-        productDataSource: com.takeapotato.core.datasource.product.ProductDataSourceImpl
-    ): com.takeapotato.core.datasource.product.ProductDataSource
+        productDataSource: ProductDataSourceImpl
+    ): ProductDataSource
 
 
 }

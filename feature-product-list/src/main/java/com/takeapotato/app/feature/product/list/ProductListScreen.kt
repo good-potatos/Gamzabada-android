@@ -57,9 +57,10 @@ fun ProductListScreen(
 
         when (productState) {
             ProductsUiState.Loading -> {
+                // todo 로딩
             }
             ProductsUiState.Error -> {
-
+                // todo 에러처리
             }
             is ProductsUiState.Success -> {
                 val list = productState.products

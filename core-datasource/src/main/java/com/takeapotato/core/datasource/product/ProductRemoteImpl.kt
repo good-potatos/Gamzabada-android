@@ -6,11 +6,15 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class ProductRemoteImpl @Inject constructor() : ProductRemote {
+class ProductRemoteImpl @Inject constructor(
+    private val api: ProductApi
+) : ProductRemote {
     override fun getProduct(): Flow<ProductDto> {
+
         // todo retrofit
         return flow {
-            emit(ProductDto(data = ProductEntity(1, "aaa")))
+            emit(api.getProducts())
+//            emit(ProductDto(data = ProductEntity(1, "aaa")))
         }
     }
 }

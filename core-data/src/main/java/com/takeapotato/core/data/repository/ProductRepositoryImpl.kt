@@ -17,4 +17,12 @@ class ProductRepositoryImpl @Inject constructor(
             .map { it.transform() }
     }
 
+    override fun getAllProductList(offset: Int): Flow<List<Product>> {
+        return dataSource.getAllProductList(offset).map {list ->
+            list.map {
+                it.transform()
+            }
+        }
+    }
+
 }
